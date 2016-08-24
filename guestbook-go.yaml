@@ -1,0 +1,39 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  labels: 
+    app: guestbook-go
+    version: 36_ad2efa6
+  name: guestbook-go
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: guestbook-go
+  template:
+    metadata:
+      labels:
+        app: guestbook-go
+    spec:
+      containers:
+        - name: guestbook-go
+          image: 477393895283.dkr.ecr.us-east-1.amazonaws.com/guestbook-go:36_ad2efa6
+          imagePullPolicy: Always
+          ports:
+            - name: "http-server"
+              containerPort: 3000
+              protocol: TCP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: guestbook-go
+  name: guestbook-go
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3000
+      targetPort: "http-server"
+  selector:
+    app: guestbook-go
