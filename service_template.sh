@@ -19,11 +19,11 @@ metadata:
 spec:
   replicas: ${SERVICE_NUM_REPLICAS}
   selector:
-    matchLables:
+    matchLabels:
       app: ${SERVICE_APPNAME}
   template:
     metadata:
-      lables:
+      labels:
         app: ${SERVICE_APPNAME}
     spec:
       containers:
