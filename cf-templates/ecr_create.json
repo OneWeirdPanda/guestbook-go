@@ -1,0 +1,53 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "ncsoft ECR repo stack  - helloworld",
+  "Parameters": {
+    "ApplicationName": {
+      "Default": "",
+      "ConstraintDescription": "",
+      "Type": "String",
+      "Description": "Application Name"
+    }
+  },
+  "Resources": {
+    "serviceECR": {
+      "Type": "AWS::ECR::Repository",
+      "Properties": {
+        "RepositoryPolicyText": {
+          "Statement": [
+            {
+              "Action": [
+                "ecr:GetAuthorizationToken",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:GetRepositoryPolicy",
+                "ecr:DescribeRepositories",
+                "ecr:ListImages",
+                "ecr:BatchGetImage",
+                "ecr:InitiateLayerUpload",
+                "ecr:UploadLayerPart",
+                "ecr:CompleteLayerUpload",
+                "ecr:PutImage"
+              ],
+              "Effect": "Allow",
+              "Principal": "*"
+            }
+          ]
+        },
+        "RepositoryName": {
+          "Ref": "ApplicationName"
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "serviceECR": {
+      "Value": {
+        "Fn::GetAtt": [
+          "serviceECR",
+          "Arn"
+        ]
+      }
+    }
+  }
+}
